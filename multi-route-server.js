@@ -56,6 +56,13 @@ async function respondWithHTML(response, filePath) {
   }
 }
 
+/**
+ * Responds to a request with the content of a CSS file.
+ *
+ * @param {http.ServerResponse} response - The response object used to send back the content.
+ * @param {string} filePath - The path to the CSS file.
+ * @return {Promise<void>} - A promise that resolves when the response is sent.
+ */
 async function respondWithCSS(response, filePath) {
   try {
     const data = await fs.promises.readFile(
@@ -86,10 +93,20 @@ myEmitter.on("routeAccessed", async (route) => {
   }
 });
 
+/**
+ * Emits a "routeAccessed" event with the given URL.
+ *
+ * @param {string} url - The URL that was accessed.
+ */
 function emitRouteAccessedEvent(url) {
   myEmitter.emit("routeAccessed", url);
 }
 
+/**
+ * Creates a log file based on the current date and returns a write stream to the file.
+ *
+ * @return {WriteStream} A write stream to the log file.
+ */
 async function createLogFile() {
   try {
     const now = new Date();
@@ -116,6 +133,12 @@ async function createLogFile() {
   }
 }
 
+/**
+ * Writes the given log message to a log file.
+ *
+ * @param {string} logMessage - The message to be written to the log file.
+ * @return {Promise<void>} - A promise that resolves when the log message has been successfully written to the log file.
+ */
 async function writeToLog(logMessage) {
   try {
     const logStream = await createLogFile();
@@ -128,6 +151,12 @@ async function writeToLog(logMessage) {
   }
 }
 
+/**
+ * Display daily information in the HTTP response.
+ *
+ * @param {Object} response - The HTTP response object.
+ * @return {void}
+ */
 async function displayDailyInfo(response) {
   try {
     // Fetch daily information from an API or using a package
@@ -158,6 +187,12 @@ async function displayDailyInfo(response) {
   response.end();
 }
 
+/**
+ * Fetches the daily news information from the news API.
+ *
+ * @return {Promise<Array<string>>} An array of news headlines.
+ * @throws {Error} If there is an error fetching the news.
+ */
 async function fetchDailyInfo() {
   try {
     const response = await axios.get("https://newsapi.org/v2/top-headlines", {
